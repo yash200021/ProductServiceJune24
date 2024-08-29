@@ -1,8 +1,12 @@
 package com.yash.productservicejune24.controllers;
 
+import com.yash.productservicejune24.dtos.ExceptionDto;
 import com.yash.productservicejune24.dtos.FakeStoreProductDto;
+import com.yash.productservicejune24.exceptions.ProductNotFoundException;
 import com.yash.productservicejune24.models.Product;
 import com.yash.productservicejune24.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +21,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") long id) {
+    public Product getProduct(@PathVariable("id") long id) throws ProductNotFoundException {
         return productService.getProductById(id);
     }
 
@@ -41,7 +45,18 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
+    @DeleteMapping("/{id}")
     public Product deleteProduct(@PathVariable("id") long id) {
         return productService.deleteProduct(id);
     }
+
+//    @ExceptionHandler(ProductNotFoundException.class)
+//    public ExceptionDto handleProductNotFoundException(){
+//        ExceptionDto exceptionDto = new ExceptionDto();
+//
+//        exceptionDto.setMessage("The product id u entered is not found, getting this error from product controller");
+//        exceptionDto.setSolution("Please enter the correct product id");
+//
+//       return exceptionDto;
+//    }
 }

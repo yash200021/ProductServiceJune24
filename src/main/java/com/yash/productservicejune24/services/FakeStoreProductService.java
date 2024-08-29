@@ -1,6 +1,7 @@
 package com.yash.productservicejune24.services;
 
 import com.yash.productservicejune24.dtos.FakeStoreProductDto;
+import com.yash.productservicejune24.exceptions.ProductNotFoundException;
 import com.yash.productservicejune24.models.Category;
 import com.yash.productservicejune24.models.Product;
 import org.springframework.http.*;
@@ -22,9 +23,14 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product getProductById(long id) {
+    public Product getProductById(long id) throws ProductNotFoundException{
         String url = "https://fakestoreapi.com/products/" + id;
         FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject(url, FakeStoreProductDto.class);
+
+        if(fakeStoreProductDto == null){
+            throw new ProductNotFoundException("The Product with id:" + id + " doesn't reside in database");
+        }
+
         return getProductFromFSProduct(fakeStoreProductDto);
     }
 
