@@ -1,6 +1,7 @@
 package com.yash.productservicejune24.controlleradvice;
 
 import com.yash.productservicejune24.dtos.ExceptionDto;
+import com.yash.productservicejune24.exceptions.CategoryNotFoundException;
 import com.yash.productservicejune24.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
              exceptionDto,
              HttpStatus.OK
+        );
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ExceptionDto> handleCategoryNotFoundException(CategoryNotFoundException cnf){
+        ExceptionDto exceptionDto = new ExceptionDto();
+
+        exceptionDto.setMessage(cnf.getMessage());
+        exceptionDto.setSolution("Please enter the correct Category id");
+
+        return new ResponseEntity<>(
+                exceptionDto,
+                HttpStatus.OK
         );
     }
 }
