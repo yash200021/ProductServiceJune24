@@ -14,6 +14,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     public Optional<Product> findById(long id);
     public List<Product> findAll();
     public Product save(Product product);
+    public void deleteById(long id);
 
     //HQL
     @Query("select p.id as id, p.title as title from Product p where p.id = :x")

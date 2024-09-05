@@ -85,8 +85,11 @@ public class SelfproductService implements ProductService{
 
     @Override
     public Product deleteProduct(long id) {
+
+        //Just for testing purpose
 //        ProductWithIdAndTitle productWithIdAndTitle = productRepository.randomSearchMethod(id);
 //        System.out.println(productWithIdAndTitle.getId() + " " + productWithIdAndTitle.getTitle());
+        productRepository.deleteById(id);
         return null;
     }
 }
